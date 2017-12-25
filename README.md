@@ -1,4 +1,4 @@
-##  BetterBetterOroBundle
+##  BetterOroBundle
 
 Table of Contents
 -----------------

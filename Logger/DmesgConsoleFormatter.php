@@ -43,7 +43,7 @@ class DmesgConsoleFormatter extends ConsoleFormatter
 
         $len = strlen($clear);
         $origLen = strlen($output);
-        if ($len > $colums && in_array($record['level_name'], ['DEBUG', 'INFO', 'NOTICE'])) {
+        if ($colums !== null && $len > $colums && in_array($record['level_name'], ['DEBUG', 'INFO', 'NOTICE'])) {
             $output = substr($output, 0, ($origLen - $len) + $colums -1) . PHP_EOL;
         }
 
@@ -65,6 +65,10 @@ class DmesgConsoleFormatter extends ConsoleFormatter
 
     private function getSttyColumns()
     {
+        if (!function_exists('proc_open')) {
+            return [null, null];
+        }
+        
         $sttyString = '';
         $descriptorspec = [1 => ['pipe', 'w'], 2 => ['pipe', 'w']];
         $process = proc_open('stty -a | grep columns', $descriptorspec, $pipes, null, null, ['suppress_errors' => true]);

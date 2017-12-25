@@ -5,6 +5,8 @@ Table of Contents
  - [Jobs logger](#jobs-logger)
  - [Change message priorities](#change-message-priorities)
  - [Message send events](#message-send-events)
+ - [Dump not translated entities](#debug-entity-translations)
+ - [Command for generate Oro bundle](#generate-bundle)
  - [Handle jobs exception](#handle-jobs-exception)
  - [Improve cron cleanup](#improve-cron-cleanup)
  - [Better log format](#better-log-format)
@@ -74,7 +76,8 @@ thru UI immediately when its created.
 You can change the predefined message priority. Example: 
 
 ```yml
-okvpn_oro:
+# Resources/config/oro/app.yml
+okvpn_better_oro:
     default_priorities:
         oro.importexport.cli_import: 3 # topic name OR cron command name OR process definition name(worklfow bundle)
         oro.importexport.pre_cli_import: 3
@@ -83,7 +86,7 @@ okvpn_oro:
         oro.importexport.pre_export: 3
         oro.importexport.export: 3
         oro.importexport.post_export: 3
-        oro.importexport.send_import_notification: 3
+        oro.importexport.send_import_notification: 1
 ```
 
 | Priority | Map |
@@ -93,6 +96,87 @@ okvpn_oro:
 | 2 | MEDIUM |
 | 3 | HIGH |
 | 4 | VERY HIGH |
+
+**By default 2**
+
+### Message send events
+
+```php
+<?php
+
+namespace Okvpn\Bundle\BetterOroBundle\Event;
+
+final class SendEvents
+{
+    /**
+     * Dispatch before send a message to the producer.
+     * Used for modify properties, headers, body or decline sending to producer
+     */
+    const BEFORE_SEND = 'message_queue.before_send';
+
+    /**
+     * Dispatch after send message to producer.
+     */
+    const AFTER_SEND = 'message_queue.after_send';
+}
+
+```
+
+### Generate bundle
+
+The command `oro:generate:bundle` helps you generates new bundles taking into account the specifics of the Oro application:
+
+- create file `Resources/config/oro/bundles.yml`
+- create stub for migrations
+- not update kernel, main config and main routing `app/*`
+
+### Debug entity translations.
+
+The command `okvpn:entity-translations:dump` debug and find not translated labels for entities
+
+Dump not translated labels for entity
+```
+php app/console okvpn:entity-translations:dump "Okvpn\Bundle\AkumaBundle\Entity\Akuma" --skip-translated
+okvpn:
+    akuma:
+        akuma:
+            entity_label: ''
+            entity_plural_label: ''
+            created_at:
+                label: ''
+            file_name:
+                label: ''
+            id:
+                label: ''
+            time:
+                label: ''
+            type:
+                label: ''
+```
+
+Dump not translated labels for all entities for given bundle
+```
+php app/console okvpn:entity-translations:dump "OkvpnAkumaBundle" --skip-translated
+okvpn:
+    akuma:
+       ...
+```
+
+### Improve cron cleanup
+
+When user run command `oro:cron:definitions:load` to load cron definitions, all cron triggers will remove from database.
+This behavior has been changed to allow the use of the functionality of the CronBundle without cron commands, ie to create triggers 
+that are not based on the commands.
+
+### Disable container reset extension
+
+Reset of container after processing a message have a great impact on perforate and memory leak. 
+This functionality is disabled by this bundle.
+
+### Handle jobs exception
+
+You can see all critical errors that occurred during execute job in UI.
+[![Logs](./Resources/docs/jobs.png)](./Resources/docs/jobs.png)
 
 ### Better log format
 

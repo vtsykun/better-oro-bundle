@@ -60,3 +60,9 @@ services:
         tags:
             # process before the @Template annotation
             - { name: kernel.event_listener, event: kernel.view, method: onKernelView, priority: 10 }
+
+    okvpn.twig.extension.message_queue:
+        class: Okvpn\Bundle\BetterOroBundle\Twig\MessageQueueExtension
+        arguments: ["@doctrine"]
+        tags:
+            - { name: twig.extension }

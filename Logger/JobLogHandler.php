@@ -59,14 +59,19 @@ class JobLogHandler extends AbstractProcessingHandler
         }
 
         $this->collectError($record);
-        $this->registry
-            ->getConnection('joblog')
-            ->insert($this->getJobLogTable(), [
-                'level' => strtolower($record['level_name']),
-                'job_id' => $job->getId(),
-                'log' => $record['message'] . "\n" . $this->getExceptionMessage($record),
-                'created_at' => $record['datetime']->format('Y-m-d H:i:s')
-            ]);
+
+        try {
+            $this->registry
+                ->getConnection('joblog')
+                ->insert($this->getJobLogTable(), [
+                    'level' => strtolower($record['level_name']),
+                    'job_id' => $job->getId(),
+                    'log' => $record['message'] . "\n" . $this->getExceptionMessage($record),
+                    'created_at' => $record['datetime']->format('Y-m-d H:i:s')
+                ]);
+        } catch (\Exception $e) {
+            // skip
+        }
     }
 
     /**

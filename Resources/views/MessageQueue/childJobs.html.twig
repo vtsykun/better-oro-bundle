@@ -35,13 +35,33 @@
 {% endblock pageHeader %}
 
 {% block content_data %}
-    {% set gridName  = 'oro_message_queue_child_jobs' %}
-    {% set params  = {'root_job_id': entity.id} %}
-    {% set renderParams = {
-            'enableFullScreenLayout': true,
-            'enableViews': true,
-            'showViewsInNavbar': true,
-    } %}
 
-    {{ dataGrid.renderGrid(gridName, params, renderParams) }}
+    {% set logs %}
+        {{ render_job_log(entity) }}
+    {% endset %}
+
+    {% set childJobs %}
+        {{ dataGrid.renderGrid('oro_message_queue_child_jobs', {'root_job_id': entity.id}) }}
+    {% endset %}
+
+    {% set dataBlocks = [
+        {
+            'title': 'View logs'|trans,
+            'subblocks': [
+                {'data' : [logs]}
+            ]
+        },
+        {
+            'title': 'oro.message_queue_job.header.child_jobs'|trans,
+            'class': 'active',
+            'subblocks': [
+                {'data' : [childJobs]}
+            ]
+        }
+    ] %}
+
+    {% set id = 'message-queue-jobs-list' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+
 {% endblock content_data %}

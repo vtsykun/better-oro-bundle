@@ -1,0 +1,6 @@
+{% for l in logs %}
+    <div class="other-scroll-container" style="padding: 10px">
+        {{ l.createdAt|date('Y-m-d H:i:s') }} {{ l.level|upper }} <br>
+        {{ l.log|raw|nl2br }}
+    </div>
+{% endfor %}

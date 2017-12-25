@@ -142,7 +142,11 @@ class JobRunner extends OroJobRunner
             throw $e;
         }
 
-        $this->logger->info(ob_get_contents());
+        $data = ob_get_contents();
+        if (!empty($data)) {
+            $this->logger->info(ob_get_contents());
+        }
+
         ob_end_clean();
 
         if ($job !== null && $this->jobsStack !== null) {

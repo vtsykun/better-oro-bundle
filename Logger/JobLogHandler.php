@@ -59,6 +59,7 @@ class JobLogHandler extends AbstractProcessingHandler
         }
 
         $this->collectError($record);
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
 
         try {
             $this->registry
@@ -67,7 +68,7 @@ class JobLogHandler extends AbstractProcessingHandler
                     'level' => strtolower($record['level_name']),
                     'job_id' => $job->getId(),
                     'log' => $record['message'] . "\n" . $this->getExceptionMessage($record),
-                    'created_at' => $record['datetime']->format('Y-m-d H:i:s')
+                    'created_at' => $now->format('Y-m-d H:i:s')
                 ]);
         } catch (\Exception $e) {
             // skip

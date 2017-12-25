@@ -5,7 +5,7 @@ namespace Okvpn\Bundle\BetterOroBundle\Logger;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
-use Okvpn\Bundle\BetterOroBundle\Event\JobLog;
+use Okvpn\Bundle\BetterOroBundle\Entity\JobLog;
 
 class JobLogHandler extends AbstractProcessingHandler
 {

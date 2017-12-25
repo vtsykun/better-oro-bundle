@@ -45,6 +45,8 @@ services:
         class: Okvpn\Bundle\BetterOroBundle\Job\JobRunner
         arguments:
             - '@oro_message_queue.job.processor'
+            - '@oro_message_queue.job.extensions'
+        public: false
         calls:
             - [setLogger, ['@logger']]
             - [setJobStorage, ['@oro_message_queue.job.storage']]

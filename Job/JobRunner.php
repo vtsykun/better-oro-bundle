@@ -5,6 +5,7 @@ namespace Okvpn\Bundle\BetterOroBundle\Job;
 use Okvpn\Bundle\BetterOroBundle\Logger\JobLogHandler;
 use Okvpn\Bundle\BetterOroBundle\Logger\JobsStack;
 use Oro\Bundle\MessageQueueBundle\Entity\Job as JobEntity;
+use Oro\Component\MessageQueue\Job\ExtensionInterface;
 use Oro\Component\MessageQueue\Job\Job;
 use Oro\Component\MessageQueue\Job\JobProcessor;
 use Oro\Component\MessageQueue\Job\JobRunner as OroJobRunner;
@@ -44,9 +45,9 @@ class JobRunner extends OroJobRunner
     /**
      * {@inheritdoc}
      */
-    public function __construct(JobProcessor $jobProcessor, Job $rootJob = null)
+    public function __construct(JobProcessor $jobProcessor, ExtensionInterface $jobExtension, Job $rootJob = null)
     {
-        parent::__construct($jobProcessor, $rootJob);
+        parent::__construct($jobProcessor, $jobExtension, $rootJob);
 
         $this->jobProcessor = $jobProcessor;
         $this->rootJob = $rootJob;

@@ -1,0 +1,3 @@
+services:
+    okvpn.jobs.logger:
+        class: Psr\Log\Test\LoggerInterfaceTest

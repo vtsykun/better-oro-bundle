@@ -1,0 +1,2 @@
+bundles:
+    - { name: Okvpn\Bundle\BetterOroBundle\OkvpnBetterOroBundle, priority: 20 }

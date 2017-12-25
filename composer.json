@@ -1,0 +1,25 @@
+{
+  "name": "okvpn/better-oro-bundle",
+  "type": "symfony-bundle",
+  "description": "Performance improve & bugfix for oro-platform",
+  "keywords": [],
+  "homepage": "https://github.com/vtsykun/better-oro-bundle",
+  "license": "Apache 2.0",
+  "authors": [
+    {
+      "name": "Vladimir Tsykun",
+      "email": "vtsykun@okvpn.org"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.0",
+    "oro/platform": "^2.3"
+  },
+  "autoload": {
+    "psr-0": {
+      "Okvpn\\Bundle\\BetterOroBundle": ""
+    }
+  },
+  "target-dir": "Okvpn/Bundle/BetterOroBundle"
+}

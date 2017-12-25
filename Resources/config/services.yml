@@ -1,0 +1,60 @@
+services:
+    okvpn.message_queue.client.proxy_message_producer:
+        class: Okvpn\Bundle\BetterOroBundle\Client\MessageProducerEventDecorator
+        decorates: oro_message_queue.client.message_producer
+        decoration_priority: -5
+        arguments:
+            - '@okvpn.message_queue.client.proxy_message_producer.inner'
+            - '@event_dispatcher'
+
+    okvpn.message_queue.listener.default_priority:
+        class: Okvpn\Bundle\BetterOroBundle\EventListener\DefaultPriorityListener
+        tags:
+            - { name: kernel.event_listener, event: message_queue.before_send, method: onBeforeSend  }
+
+    okvpn.message_queue.extension.redeliver_orphan:
+        class: Okvpn\Bundle\BetterOroBundle\Extension\RedeliverOrphanMessagesDbalExtension
+        arguments: [~]
+        tags:
+            - { name: oro_message_queue.consumption.extension }
+
+    okvpn.message_queue.token_storage_clearer_extension:
+        class: Okvpn\Bundle\BetterOroBundle\Extension\TokenStorageClearerExtension
+        public: false
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: 'oro_message_queue.consumption.extension' }
+
+    okvpn.job_stack:
+        class: Okvpn\Bundle\BetterOroBundle\Logger\JobsStack
+
+    okvpn.log.job_handler:
+        class: Okvpn\Bundle\BetterOroBundle\Logger\JobLogHandler
+        public: false
+        arguments: ['@okvpn.job_stack']
+        calls:
+            - [setRegistry, ['@doctrine']]
+
+    okvpn.listener.extension.process_trigger:
+        class: Okvpn\Bundle\BetterOroBundle\Workflow\ProcessTriggerExtension
+        parent: oro_workflow.listener.extension.process_trigger
+        decorates: oro_workflow.listener.extension.process_trigger
+
+    oro_message_queue.job.runner:
+        class: Okvpn\Bundle\BetterOroBundle\Job\JobRunner
+        arguments:
+            - '@oro_message_queue.job.processor'
+        calls:
+            - [setLogger, ['@logger']]
+            - [setJobStorage, ['@oro_message_queue.job.storage']]
+            - [setLogHandler, ['@okvpn.log.job_handler']]
+            - [setJobsStack, ['@okvpn.job_stack']]
+        tags:
+            - { name: monolog.logger, channel: okvpn_jobs } # inject logger with "okvpn.log.job_handler"
+
+    okvpn.message_queue_controller.listener:
+        class: Okvpn\Bundle\BetterOroBundle\EventListener\TemplateControllerListener
+        tags:
+            # process before the @Template annotation
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelView, priority: 10 }

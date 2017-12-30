@@ -139,6 +139,9 @@ class JobRunner extends OroJobRunner
             );
 
             $this->logger->critical($log);
+            if ($job !== null && $this->jobsStack !== null) {
+                $this->jobsStack->pop();
+            }
             throw $e;
         }
 

@@ -23,18 +23,31 @@ class OkvpnBetterOroExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('okvpn.better_oro', $config['capabilities']);
+        $capabilities = $config['capabilities'];
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $priorityListener = $container->getDefinition('okvpn.message_queue.listener.default_priority');
-        $priorityListener->addMethodCall('setPriorityTopicMapping', [$config['default_priorities']]);
-
-        if ($container->hasParameter('monolog.additional_channels')) {
-            $channels = $container->getParameter('monolog.additional_channels');
-        } else {
-            $channels = [];
+        if (true === $capabilities['mq_send_events']) {
+            $loader->load('mq_send_events.yml');
+            $priorityListener = $container->getDefinition('okvpn.message_queue.listener.default_priority');
+            $priorityListener->addMethodCall('setPriorityTopicMapping', [$config['default_priorities']]);
         }
-        $channels[] = MessageQueuePass::CHANEL;
-        $container->setParameter('monolog.additional_channels', $channels);
+
+        if (true === $capabilities['job_logs']) {
+            $loader->load('job_logs.yml');
+            if ($container->hasParameter('monolog.additional_channels')) {
+                $channels = $container->getParameter('monolog.additional_channels');
+            } else {
+                $channels = [];
+            }
+            $channels[] = MessageQueuePass::CHANEL;
+            $container->setParameter('monolog.additional_channels', $channels);
+        }
+
+        if (true === $capabilities['mq_disable_container_reset']) {
+            $loader->load('reset_extension.yml');
+        }
     }
 }

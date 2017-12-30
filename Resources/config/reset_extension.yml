@@ -1,0 +1,8 @@
+services:
+    okvpn.message_queue.token_storage_clearer_extension:
+        class: Okvpn\Bundle\BetterOroBundle\Extension\TokenStorageClearerExtension
+        public: false
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: 'oro_message_queue.consumption.extension' }

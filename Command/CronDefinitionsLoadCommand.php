@@ -7,7 +7,6 @@ use Psr\Log\LogLevel;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Exception\CommandNotFoundException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
@@ -16,42 +15,39 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Oro\Bundle\CronBundle\Command\CronCommandInterface;
 use Oro\Bundle\CronBundle\Entity\Manager\DeferredScheduler;
 use Oro\Bundle\CronBundle\Entity\Schedule;
+use Oro\Bundle\CronBundle\Command\CronDefinitionsLoadCommand as BugCronDefinitionsLoadCommand;
 
 /**
  * todo: Exist for bugfix. Should be remove when https://github.com/orocrm/platform/pull/673 will merge.
  */
-class CronDefinitionsLoadCommand extends ContainerAwareCommand
+class CronDefinitionsLoadCommand extends BugCronDefinitionsLoadCommand
 {
     /** @var DeferredScheduler */
-    protected $deferred;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
-    {
-        $this
-            ->setName('oro:cron:definitions:load')
-            ->setDescription('Loads cron commands definitions from application to database.');
-    }
+    private $deferred;
 
     /**
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $capabilities = $this->getContainer()->getParameter('okvpn.better_oro');
+        if (false === $capabilities['cron_fix_cleanup']) {
+            return parent::execute($input, $output);
+        }
+
         $deferred = $this->getDeferredScheduler($output);
         $this->removeOrphanedCronCommands($deferred);
         $this->loadCronCommands($deferred);
         $deferred->flush();
 
         $output->writeln('<info>The cron command definitions were successfully loaded.</info>');
+        return 0;
     }
 
     /**
      * @param DeferredScheduler $deferredScheduler
      */
-    protected function removeOrphanedCronCommands(DeferredScheduler $deferredScheduler)
+    private function removeOrphanedCronCommands(DeferredScheduler $deferredScheduler)
     {
         $schedulesForDelete = array_filter(
             $this->getRepository('OroCronBundle:Schedule')->findAll(),
@@ -85,7 +81,7 @@ class CronDefinitionsLoadCommand extends ContainerAwareCommand
     /**
      * @param DeferredScheduler $deferredScheduler
      */
-    protected function loadCronCommands(DeferredScheduler $deferredScheduler)
+    private function loadCronCommands(DeferredScheduler $deferredScheduler)
     {
         $cronCommands = $this->getApplication()->all('oro:cron');
         foreach ($cronCommands as $command) {
@@ -105,7 +101,7 @@ class CronDefinitionsLoadCommand extends ContainerAwareCommand
      * @param string $className
      * @return ObjectManager
      */
-    protected function getEntityManager($className)
+    private function getEntityManager($className)
     {
         return $this->getContainer()->get('doctrine')->getManagerForClass($className);
     }
@@ -114,7 +110,7 @@ class CronDefinitionsLoadCommand extends ContainerAwareCommand
      * @param string $className
      * @return ObjectRepository
      */
-    protected function getRepository($className)
+    private function getRepository($className)
     {
         return $this->getEntityManager($className)->getRepository($className);
     }
@@ -123,7 +119,7 @@ class CronDefinitionsLoadCommand extends ContainerAwareCommand
      * @param OutputInterface $output
      * @return DeferredScheduler
      */
-    protected function getDeferredScheduler(OutputInterface $output)
+    private function getDeferredScheduler(OutputInterface $output)
     {
         if (null === $this->deferred) {
             $logger = new ConsoleLogger($output, [

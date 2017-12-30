@@ -12,7 +12,11 @@ class DisableContainerResetExtensionPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if ($container->hasDefinition('oro_message_queue.consumption.container_reset_extension')) {
+        $capabilities = $container->getParameter('okvpn.better_oro');
+
+        if (true === $capabilities['mq_disable_container_reset']
+            && $container->hasDefinition('oro_message_queue.consumption.container_reset_extension')
+        ) {
             $def = $container->getDefinition('oro_message_queue.consumption.container_reset_extension');
             $def->clearTags();
         }

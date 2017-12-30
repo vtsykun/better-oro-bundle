@@ -16,7 +16,9 @@ class MessageQueuePass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if ($container->hasDefinition('oro_message_queue.log.handler.console')) {
+        $capabilities = $container->getParameter('okvpn.better_oro');
+
+        if ($capabilities['mq_log_format'] && $container->hasDefinition('oro_message_queue.log.handler.console')) {
             $def = $container->getDefinition('oro_message_queue.log.handler.console');
             $def->setClass(PreFilterHandler::class);
         }
@@ -28,7 +30,7 @@ class MessageQueuePass implements CompilerPassInterface
         }
 
         $loggerId = sprintf('monolog.logger.%s', self::CHANEL);
-        if ($container->hasDefinition($loggerId)) {
+        if ($capabilities['job_logs'] && $container->hasDefinition($loggerId)) {
             $container->setAlias('okvpn.jobs.logger', $loggerId);
             $definition = $container->getDefinition($loggerId);
             $definition->addMethodCall('pushHandler', [new Reference('okvpn.log.job_handler')]);

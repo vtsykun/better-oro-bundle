@@ -1,8 +1,10 @@
 ##  BetterOroBundle
 
+This bundle provide bugfixes and new features for OroPlatform.
+
 Table of Contents
 -----------------
- - [Jobs logger](#jobs-logger)
+ - [Job logger](#job-logger)
  - [Change message priorities](#change-message-priorities)
  - [Message send events](#message-send-events)
  - [Dump not translated entities](#debug-entity-translations)
@@ -13,7 +15,7 @@ Table of Contents
  - [Disable container reset extension](#disable-container-reset-extension)
 
 
-### Jobs logger
+### Job logger
 The job logger provides the ability to display logs in the UI. Usage: inject logger `okvpn.jobs.logger` into your service
 
 Example:

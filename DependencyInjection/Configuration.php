@@ -33,6 +33,15 @@ class Configuration implements ConfigurationInterface
                 ->useAttributeAsKey('name')
                 ->prototype('scalar')->end()
             ->end()
+            ->arrayNode('capabilities')
+                ->children()
+                    ->booleanNode('mq_disable_container_reset')->defaultValue(true)->end()
+                    ->booleanNode('mq_send_events')->defaultValue(true)->end()
+                    ->booleanNode('mq_log_format')->defaultValue(true)->end()
+                    ->booleanNode('cron_fix_cleanup')->defaultValue(true)->end()
+                    ->booleanNode('job_logs')->defaultValue(true)->end()
+                ->end()
+            ->end()
             ->integerNode('prefetch_size')->defaultValue(4)
             ->end();
         return $treeBuilder;

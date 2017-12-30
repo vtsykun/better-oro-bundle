@@ -1,0 +1,18 @@
+services:
+    okvpn.message_queue.client.proxy_message_producer:
+        class: Okvpn\Bundle\BetterOroBundle\Client\MessageProducerEventDecorator
+        decorates: oro_message_queue.client.message_producer
+        decoration_priority: -5
+        arguments:
+            - '@okvpn.message_queue.client.proxy_message_producer.inner'
+            - '@event_dispatcher'
+
+    okvpn.message_queue.listener.default_priority:
+        class: Okvpn\Bundle\BetterOroBundle\EventListener\DefaultPriorityListener
+        tags:
+            - { name: kernel.event_listener, event: message_queue.before_send, method: onBeforeSend  }
+
+    okvpn.listener.extension.process_trigger:
+        class: Okvpn\Bundle\BetterOroBundle\Workflow\ProcessTriggerExtension
+        parent: oro_workflow.listener.extension.process_trigger
+        decorates: oro_workflow.listener.extension.process_trigger

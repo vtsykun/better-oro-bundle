@@ -52,5 +52,9 @@ class OkvpnBetterOroExtension extends Extension
         if (true === $capabilities['fix_calendar']) {
             $loader->load('fix_calendar.yml');
         }
+
+        if (true === $capabilities['fast_job_calculator']) {
+            $loader->load('root_job_calculator.yml');
+        }
     }
 }

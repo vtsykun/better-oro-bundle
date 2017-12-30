@@ -1,0 +1,14 @@
+services:
+    oro_message_queue.job.root_job_progress_calculator:
+        class: Okvpn\Bundle\BetterOroBundle\Job\RootJobProgressCalculator
+        public: false
+        arguments:
+            - '@oro_message_queue.job.storage'
+            - '@doctrine'
+
+    oro_message_queue.job.root_job_status_calculator:
+        class: Okvpn\Bundle\BetterOroBundle\Job\RootJobStatusCalculator
+        public: false
+        arguments:
+            - '@oro_message_queue.job.storage'
+            - '@doctrine'

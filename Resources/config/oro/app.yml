@@ -9,3 +9,6 @@ doctrine:
                 user:     '%database_user%'
                 password: '%database_password%'
                 charset:  UTF8
+
+okvpn_better_oro:
+    capabilities: []

@@ -23,31 +23,30 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->arrayNode('default_priorities')
-                ->beforeNormalization()
-                    ->always(function ($value) {
-                        $value = array_map([$this, 'normalizePriority'], $value);
-                        return $value;
-                    })
+                ->arrayNode('default_priorities')
+                    ->beforeNormalization()
+                        ->always(function ($value) {
+                            $value = array_map([$this, 'normalizePriority'], $value);
+                            return $value;
+                        })
+                    ->end()
+                    ->useAttributeAsKey('name')
+                    ->prototype('scalar')->end()
                 ->end()
-                ->useAttributeAsKey('name')
-                ->prototype('scalar')->end()
-            ->end()
-            ->arrayNode('capabilities')
-                ->children()
-                    ->booleanNode('mq_disable_container_reset')->defaultValue(true)->end()
-                    ->booleanNode('mq_send_events')->defaultValue(true)->end()
-                    ->booleanNode('mq_log_format')->defaultValue(true)->end()
-                    ->booleanNode('cron_fix_cleanup')->defaultValue(true)->end()
-                    ->booleanNode('job_logs')->defaultValue(true)->end()
+                ->arrayNode('capabilities')
+                    ->children()
+                        ->booleanNode('mq_disable_container_reset')->defaultValue(true)->end()
+                        ->booleanNode('mq_send_events')->defaultValue(true)->end()
+                        ->booleanNode('mq_log_format')->defaultValue(true)->end()
+                        ->booleanNode('cron_fix_cleanup')->defaultValue(true)->end()
+                        ->booleanNode('job_logs')->defaultValue(true)->end()
+                    ->end()
                 ->end()
-            ->end()
-            ->integerNode('prefetch_size')->defaultValue(4)
             ->end();
         return $treeBuilder;
     }
 
-    protected function normalizePriority($integerPriority)
+    private function normalizePriority($integerPriority)
     {
         $mapping = [
             MessagePriority::VERY_LOW,

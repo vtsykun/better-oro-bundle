@@ -26,7 +26,7 @@ class TemplateControllerListener
     protected function getRoutesForReplace()
     {
         return [
-            'oro_message_queue_child_jobs' => 'OkvpnBetterOroBundle:MessageQueue:childJobs.html.twig',
+            'oro_message_queue_child_jobs' => '@OkvpnBetterOro/MessageQueue/childJobs.html.twig',
         ];
     }
 }

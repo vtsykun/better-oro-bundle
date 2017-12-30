@@ -1,4 +1,4 @@
-##  BetterOroBundle
+#  BetterOroBundle
 
 This bundle provide bugfixes and new features for OroPlatform.
 
@@ -13,7 +13,20 @@ Table of Contents
  - [Improve cron cleanup](#improve-cron-cleanup)
  - [Better log format](#better-log-format)
  - [Disable container reset extension](#disable-container-reset-extension)
+ - [Calendar date duplicate](#calendar-date-duplicate)
 
+## Configurable capabilities
+
+```yml
+okvpn_better_oro:
+    capabilities:
+        mq_disable_container_reset: true #Disable container reset extension for performance
+        mq_send_events: true #Dispatch sending events & overwrite message priority of queue processing
+        mq_log_format: true #User frendly format of MQ logs in console (tty)
+        cron_fix_cleanup: true #Fix cron definition load command
+        job_logs: true #Display job output and errors in UI
+        fix_calendar: true #Fix calendar days generator in ReportBunle 
+```
 
 ### Job logger
 The job logger provides the ability to display logs in the UI. Usage: inject logger `okvpn.jobs.logger` into your service
@@ -163,6 +176,13 @@ okvpn:
     akuma:
        ...
 ```
+
+### Calendar date duplicate
+
+There is the cron command `oro:cron:calendar:date` for adding new days to the calendar table. This table usually
+used for build report with group by days, for create dql query that rerurn result from empty period with grouping by days, etc.
+But this command work not correctly: every time when cron triggered the duplicates appear in the table
+This bundle fix it to preventing duplication of records in the `oro_calendar_date` table.
 
 ### Improve cron cleanup
 

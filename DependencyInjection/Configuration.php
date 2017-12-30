@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('mq_log_format')->defaultValue(true)->end()
                         ->booleanNode('cron_fix_cleanup')->defaultValue(true)->end()
                         ->booleanNode('job_logs')->defaultValue(true)->end()
+                        ->booleanNode('fix_calendar')->defaultValue(true)->end()
                     ->end()
                 ->end()
             ->end();

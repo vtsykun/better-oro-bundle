@@ -48,5 +48,9 @@ class OkvpnBetterOroExtension extends Extension
         if (true === $capabilities['mq_disable_container_reset']) {
             $loader->load('reset_extension.yml');
         }
+
+        if (true === $capabilities['fix_calendar']) {
+            $loader->load('fix_calendar.yml');
+        }
     }
 }

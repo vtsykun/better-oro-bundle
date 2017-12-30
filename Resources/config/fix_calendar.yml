@@ -1,0 +1,2 @@
+parameters:
+    oro_report.calendar_date_manager.class: Okvpn\Bundle\BetterOroBundle\Calendar\BugFixCalendarDateManager

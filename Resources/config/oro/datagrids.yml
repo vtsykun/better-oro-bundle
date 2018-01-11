@@ -1,0 +1,12 @@
+datagrids:
+    oro-cron-schedules-grid:
+        source:
+            query_builder: null
+            query:
+                select:
+                    - s.id
+                    - s.command
+                    - s.arguments
+                    - s.definition
+                from:
+                    - { table: OroCronBundle:Schedule , alias: s }

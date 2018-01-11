@@ -7,3 +7,7 @@ services:
         arguments: [~]
         tags:
             - { name: oro_message_queue.consumption.extension }
+
+    okvpn_action.run_cron_command:
+        class: Okvpn\Bundle\BetterOroBundle\Cron\RunCronCommandAction
+        arguments: ['@oro_cron.async.command_runner']

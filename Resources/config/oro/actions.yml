@@ -1,0 +1,16 @@
+operations:
+    okvpn_run_cron_command:
+        label: Run cron command
+        datagrids:
+            - oro-cron-schedules-grid
+        order: 30
+        button_options:
+            icon: fa-play
+        actions:
+            - '@call_service_method':
+                service: okvpn_action.run_cron_command
+                method: run
+                method_parameters: [$.data]
+            - '@flash_message':
+                message: 'The command was scheduled'
+                type: 'success'

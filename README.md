@@ -15,6 +15,7 @@ Table of Contents
  - [Disable container reset extension](#disable-container-reset-extension)
  - [Calendar date duplicate](#calendar-date-duplicate)
  - [Fast root job calculator](#fast-root-job-calculator)
+ - [Manual cron run]()
 
 ## Configurable capabilities
 

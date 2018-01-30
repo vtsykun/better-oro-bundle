@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
                         })
                     ->end()
                     ->useAttributeAsKey('name')
+                    ->normalizeKeys(false)
                     ->prototype('scalar')->end()
                 ->end()
                 ->arrayNode('capabilities')

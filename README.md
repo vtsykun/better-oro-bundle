@@ -15,6 +15,7 @@ Table of Contents
  - [Disable container reset extension](#disable-container-reset-extension)
  - [Calendar date duplicate](#calendar-date-duplicate)
  - [Fast root job calculator](#fast-root-job-calculator)
+ - [Disable outgoing network requests by OroCRM Request Form](#disable-orocrm-request-form)
  - [Manual cron run]()
 
 ## Configurable capabilities
@@ -205,6 +206,12 @@ that are not based on the commands.
 
 Reset of container after processing a message have a great impact on perforate and memory leak. 
 This functionality is disabled by this bundle.
+
+### Disable orocrm request form
+
+Outgoing network requests to https://r.orocrm.com were noticed. Their reason - [php script](https://github.com/oroinc/platform/blob/2.6/src/Oro/Bundle/PlatformBundle/Form/UrlGenerator.php#L11) and 
+[js script](https://github.com/oroinc/platform/blob/2.6/src/Oro/Bundle/PlatformBundle/Resources/views/have_request.html.twig) 
+The give script sends same information to ORO server and load any js script. You can configure Content Security Policy or disable script manually)
 
 ### Handle jobs exception
 

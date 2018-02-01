@@ -1,0 +1,9 @@
+placeholders:
+    placeholders:
+        footer_inner:
+            items:
+                have_request: ~
+
+    items:
+        have_request:
+            template: OkvpnBetterOroBundle::have_request.html.twig

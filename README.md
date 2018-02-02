@@ -207,8 +207,9 @@ The give script sends information about OroPlatform to remote server, also load 
 
 ### Fix order by the time period
 
-[![Bug 3](./Resources/docs/bug3.png)](./Resources/docs/bug3.png)
 Order by the time period was broken by commit (OroPlatform 2.6.0): https://github.com/oroinc/platform/commit/5d9e5d1852aa82fb538710bfb0e4dcbc0b9b19b5
+
+[![Bug 3](./Resources/docs/bug3.png)](./Resources/docs/bug3.png)
 
 ### Cron run in UI
 

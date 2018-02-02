@@ -14,7 +14,6 @@ Table of Contents
  - [Better log format](#better-log-format)
  - [Disable container reset extension](#disable-container-reset-extension)
  - [Calendar date duplicate](#calendar-date-duplicate)
- - [Fast root job calculator](#fast-root-job-calculator)
  - [Disable outgoing network requests by OroCRM Request Form](#disable-orocrm-request-form)
  - [Manual cron run]()
 
@@ -186,15 +185,6 @@ There is the cron command `oro:cron:calendar:date` for adding new days to the ca
 used for build report with group by days, for create dql query that rerurn result from empty period with grouping by days, etc.
 But this command work not correctly: every time when cron triggered the duplicates appear in the table
 This bundle fix it to preventing duplication of records in the `oro_calendar_date` table.
-
-### Fast root job calculator
-
-The processor `oro_message_queue.job.calculate_root_job_progress_processor` 
-and `oro_message_queue.job.calculate_root_job_status_processor` update the status of root job and its progress 
-after the any job was finished. For example the root job have 1000 child jobs the calculator will be trigger 1000 times for each job.
-The job calculator always fetch **all** child job and hydrate it into objects. So the Doctrine will dispatch 
-the event `postLoad` 1000 times!. In total we get 1000 cycles of the hydration of the 1000 child objects - it is bad:). 
-In this bundle used DQL for calculate progress and status of thr root job.
 
 ### Improve cron cleanup
 

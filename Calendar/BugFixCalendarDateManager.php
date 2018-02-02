@@ -33,4 +33,26 @@ class BugFixCalendarDateManager extends CalendarDateManager
 
         $manager->flush();
     }
+
+    /**
+     * @param bool $append
+     * @return \DatePeriod
+     */
+    protected function getDatesFromInterval($append = false)
+    {
+        $timeZone = new \DateTimeZone('UTC');
+        $startDate = new \DateTime('now midnight', $timeZone);
+        $startDate->setDate($startDate->format('Y'), 1, 1);
+
+        if ($append) {
+            $startDate = $this->getLastDate() ?: $startDate;
+        }
+
+        $endDate = new \DateTime('tomorrow midnight', $timeZone);
+        $endDate->add(new \DateInterval('P1D'));
+
+        $period = new \DatePeriod($startDate, new \DateInterval('P1D'), $endDate);
+
+        return $period;
+    }
 }

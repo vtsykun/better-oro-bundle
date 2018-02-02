@@ -15,7 +15,9 @@ Table of Contents
  - [Disable container reset extension](#disable-container-reset-extension)
  - [Calendar date duplicate](#calendar-date-duplicate)
  - [Disable outgoing network requests by OroCRM Request Form](#disable-orocrm-request-form)
- - [Manual cron run]()
+ - [Fix order by timePeriod in DateGroupingFilter](#fix-order-by-the-time-period)
+ - [Manual cron run](#cron-run-in-ui)
+ - [Show datagrid exception if debug = true](./Datagrid/DataGridExtension.php#L27)
 
 ## Configurable capabilities
 
@@ -24,7 +26,7 @@ okvpn_better_oro:
     capabilities:
         mq_disable_container_reset: true #Disable container reset extension for performance
         mq_send_events: true #Dispatch sending events & overwrite message priority of queue processing
-        mq_log_format: true #User frendly format of MQ logs in console (tty)
+        mq_log_format: true #User frendly format of MQ logs in console (in tty console)
         cron_fix_cleanup: true #Fix cron definition load command
         job_logs: true #Display job output and errors in UI
         fix_calendar: true #Fix calendar days generator in ReportBunle 
@@ -201,7 +203,16 @@ This functionality is disabled by this bundle.
 
 Outgoing network requests to https://r.orocrm.com were noticed. Their reason - [php script](https://github.com/oroinc/platform/blob/2.6/src/Oro/Bundle/PlatformBundle/Form/UrlGenerator.php#L11) and 
 [js script](https://github.com/oroinc/platform/blob/2.6/src/Oro/Bundle/PlatformBundle/Resources/views/have_request.html.twig) 
-The give script sends same information to ORO server and load any js script. You can configure Content Security Policy or disable script manually)
+The give script sends information about OroPlatform to remote server, also load a strange js script.
+
+### Fix order by the time period
+
+[![Bug 3](./Resources/docs/bug3.png)](./Resources/docs/bug3.png)
+Order by the time period was broken by commit (OroPlatform 2.6.0): https://github.com/oroinc/platform/commit/5d9e5d1852aa82fb538710bfb0e4dcbc0b9b19b5
+
+### Cron run in UI
+
+[![CRON](./Resources/docs/cron.png)](./Resources/docs/cron.png)
 
 ### Handle jobs exception
 

@@ -11,3 +11,20 @@ services:
     okvpn_action.run_cron_command:
         class: Okvpn\Bundle\BetterOroBundle\Cron\RunCronCommandAction
         arguments: ['@oro_cron.async.command_runner']
+
+    oro_filter.date_grouping_filter:
+        class: Okvpn\Bundle\BetterOroBundle\Filters\DateGroupingFilter
+        arguments:
+            - '@form.factory'
+            - '@oro_filter.filter_utility'
+            - '@doctrine'
+        tags:
+            - { name: oro_filter.extension.orm_filter.filter, type: date_grouping, datasource: orm }
+
+    oro_datagrid.twig.datagrid:
+        class: Okvpn\Bundle\BetterOroBundle\Datagrid\DataGridExtension
+        public: false
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: twig.extension }

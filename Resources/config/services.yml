@@ -28,3 +28,10 @@ services:
             - '@service_container'
         tags:
             - { name: twig.extension }
+
+    oro_query_designer.form.type.date_field_choice:
+        class: '%oro_query_designer.form.type.date_field_choice.class%'
+        arguments:
+            - '@translator'
+        tags:
+            - { name: form.type, alias: oro_date_field_choice }

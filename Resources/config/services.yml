@@ -30,7 +30,7 @@ services:
             - { name: twig.extension }
 
     oro_query_designer.form.type.date_field_choice:
-        class: '%oro_query_designer.form.type.date_field_choice.class%'
+        class: Okvpn\Bundle\BetterOroBundle\Form\Type\DateFieldChoiceType
         arguments:
             - '@translator'
         tags:

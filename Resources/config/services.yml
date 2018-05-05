@@ -29,6 +29,13 @@ services:
         tags:
             - { name: twig.extension }
 
+    oro_security.listener.context_listener:
+        class: Okvpn\Bundle\BetterOroBundle\EventListener\ContextListener
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 7 }
+
     okvpn.form.extension.oro_date_field_choice:
         class: Okvpn\Bundle\BetterOroBundle\Form\Extension\DateFieldChoiceExtension
         tags:

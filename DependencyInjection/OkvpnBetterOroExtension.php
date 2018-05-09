@@ -52,5 +52,9 @@ class OkvpnBetterOroExtension extends Extension
         if (true === $capabilities['fix_calendar']) {
             $loader->load('fix_calendar.yml');
         }
+
+        if (true === $capabilities['disable_remote_transactions']) {
+            $loader->load('remote_transactions.yml');
+        }
     }
 }

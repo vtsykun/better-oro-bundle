@@ -1,0 +1,10 @@
+services:
+    oro_translation.oro_translation_adapter:
+        class: Okvpn\Bundle\BetterOroBundle\Translation\OkvpnTranslationAdapter
+        arguments:
+            - '@oro_translation.guzzle_oro_client'
+        calls:
+            - [ setApiKey, [ '%oro_translation.api.oro_service.key%' ] ]
+            - [ setLogger, [ '@logger' ] ]
+        tags:
+            - { name: monolog.logger, channel: oro_translation }

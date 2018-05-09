@@ -43,6 +43,7 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('job_logs')->defaultValue(true)->end()
                         ->booleanNode('fix_calendar')->defaultValue(true)->end()
                         ->booleanNode('fast_job_calculator')->defaultValue(true)->end()
+                        ->booleanNode('disable_remote_transactions')->defaultValue(true)->end()
                     ->end()
                 ->end()
             ->end();

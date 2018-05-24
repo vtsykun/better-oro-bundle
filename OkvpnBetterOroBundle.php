@@ -11,6 +11,16 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class OkvpnBetterOroBundle extends Bundle
 {
+    public function __construct()
+    {
+        if (!class_exists('Oro\Component\MessageQueue\Consumption\LimitsExtensionsCommandTrait', false)) {
+            class_alias(
+                'Okvpn\Bundle\BetterOroBundle\Extension\LimitsExtensionsCommandTrait',
+                'Oro\Component\MessageQueue\Consumption\LimitsExtensionsCommandTrait'
+            );
+        }
+    }
+
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new MessageQueuePass());

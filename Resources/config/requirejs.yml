@@ -1,0 +1,3 @@
+config:
+    paths:
+        'orodatagrid/js/datagrid/cell-iterator': 'bundles/okvpnbetteroro/js/cell-iterator.js'

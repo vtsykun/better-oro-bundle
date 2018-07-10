@@ -12,3 +12,12 @@ doctrine:
 
 okvpn_better_oro:
     capabilities: []
+
+security:
+    firewalls:
+        main:
+            organization-remember-me:
+                secret:                    '%secret%'
+                name:                       BAPRM
+                lifetime:                   31557600 # 1 year
+                httponly:                   true

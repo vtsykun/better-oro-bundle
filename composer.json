@@ -4,7 +4,7 @@
   "description": "Performance improve & bugfix for oro-platform",
   "keywords": [],
   "homepage": "https://github.com/vtsykun/better-oro-bundle",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Vladimir Tsykun",

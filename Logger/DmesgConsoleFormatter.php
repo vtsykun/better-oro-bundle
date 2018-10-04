@@ -2,10 +2,9 @@
 
 namespace Okvpn\Bundle\BetterOroBundle\Logger;
 
-use Oro\Bundle\MessageQueueBundle\Log\Formatter\ConsoleFormatter;
 use Oro\Component\MessageQueue\Client\Config;
 
-class DmesgConsoleFormatter extends ConsoleFormatter
+class DmesgConsoleFormatter extends LegacyConsoleFormatter
 {
     const SIMPLE_FORMAT = "%start_tag%%level_name%:%end_tag%%empty%" .
     "<comment>[<bg=default;options=bold>%execute_time%</>%channel%|%processor%]</comment> "

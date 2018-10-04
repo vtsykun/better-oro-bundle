@@ -29,16 +29,16 @@ class PreFilterHandler extends ConsoleHandler
         return parent::handle($record);
     }
 
-//    /**
-//     * {@inheritdoc}
-//     */
-//    protected function getDefaultFormatter()
-//    {
-//        return new DmesgConsoleFormatter(
-//            [
-//                'extension' => ['extra', 'extension'],
-//                'message'   => ['extra', 'message_body'],
-//            ]
-//        );
-//    }
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultFormatter()
+    {
+        return new DmesgConsoleFormatter(
+            [
+                'extension' => ['extra', 'extension'],
+                'message'   => ['extra', 'message_body'],
+            ]
+        );
+    }
 }

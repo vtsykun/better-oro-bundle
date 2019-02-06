@@ -4,8 +4,7 @@ namespace Okvpn\Bundle\BetterOroBundle\Job;
 
 use Okvpn\Bundle\BetterOroBundle\Logger\JobLogHandler;
 use Okvpn\Bundle\BetterOroBundle\Logger\JobsStack;
-use Oro\Bundle\MessageQueueBundle\Entity\Job as JobEntity;
-use Oro\Component\MessageQueue\Job\ExtensionInterface;
+use Oro\Component\MessageQueue\Job\Extension\ExtensionInterface;
 use Oro\Component\MessageQueue\Job\Job;
 use Oro\Component\MessageQueue\Job\JobProcessor;
 use Oro\Component\MessageQueue\Job\JobRunner as OroJobRunner;
@@ -115,11 +114,11 @@ class JobRunner extends OroJobRunner
 
     /**
      * @param callable $wrapper
-     * @param JobEntity $job
+     * @param Job $job
      * @return mixed
      * @throws \Throwable
      */
-    protected function runWrapperAndLog(callable $wrapper, JobEntity $job = null)
+    protected function runWrapperAndLog(callable $wrapper, Job $job = null)
     {
         if ($job !== null && $this->jobsStack !== null) {
             $this->jobsStack->push($job);

@@ -1,0 +1,3 @@
+config:
+    paths:
+        'oroui/js/error': 'bundles/okvpnbetteroro/js/error.js'

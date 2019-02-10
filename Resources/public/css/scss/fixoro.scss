@@ -1,0 +1,126 @@
+.other-scroll-container {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 12px
+}
+
+.oro-datagrid {
+  .grid-body-cell {
+    padding: 4px 8px;
+    line-height: 1.8;
+
+  }
+  .grid-header-cell {
+    padding: 6px 8px;
+  }
+  .action-cell.grid-cell {
+    padding: 0 8px;
+    .dropdown-toggle {
+      span {
+        padding-top: 4px;
+        padding-right: 10px;
+      }
+    }
+    .unstyled.launchers-list {
+      display: none;
+    }
+    li.divider {
+      display: none;
+    }
+  }
+  .grid-cell {
+    ul {
+      margin: 0;
+    }
+  }
+}
+
+.more-bar-holder {
+  .dropdown-toggle {
+    padding: 1px 8px;
+    line-height: 20px
+  }
+}
+
+.launchers-list {
+  .action.mode-icon-only {
+    line-height: 10px;
+    height: 10px;
+  }
+}
+
+.grid {
+  .launchers-list {
+    padding: 0;
+  }
+}
+
+.oro-datagrid {
+  .grid-main-container {
+    font-size: 13px;
+  }
+}
+
+.show {
+  .launchers-dropdown-menu {
+    padding: 4px;
+  }
+  .launchers-list {
+    .action.mode-icon-only {
+      line-height: 22px;
+      height: 22px;
+    }
+  }
+}
+
+
+/*
+ *  other-scroll bar
+ */
+
+.oro-datagrid {
+  .other-scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #919193;
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  .other-scroll::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+
+  .other-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px #919193;
+    background-color: #555;
+  }
+}
+
+// End fix grid
+
+.page-toolbar {
+  min-height: 30px;
+}
+
+.dashboard-container-wrapper {
+  .dashboard-widget {
+    .widget-header {
+      padding: 0;
+    }
+    .row-fluid {
+      padding: 10px;
+    }
+  }
+}
+
+body {
+  line-height: 1.37;
+  .attribute-item {
+    margin: 0 0 8px;
+  }
+}
+
+img.widget-picker__img {
+  max-width: 100%;
+}

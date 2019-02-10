@@ -9,7 +9,7 @@ use Oro\Bundle\FilterBundle\Filter\FilterUtility;
 
 class DateGroupingFilter extends BugDateGroupingFilter
 {
-    public function applyOrderBy(OrmDatasource $datasource, String $sortKey, String $direction)
+    public function applyOrderBy(OrmDatasource $datasource, string $sortKey, string $direction)
     {
         /* @var OrmDatasource $datasource */
         $qb = $datasource->getQueryBuilder();

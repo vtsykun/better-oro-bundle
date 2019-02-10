@@ -21,6 +21,26 @@ services:
         tags:
             - { name: oro_filter.extension.orm_filter.filter, type: date_grouping, datasource: orm }
 
+    oro_report.cache:
+        class: Okvpn\Bundle\BetterOroBundle\Filters\ReportCache
+        arguments: ['@doctrine']
+
+    oro_report.grid.date_grouping_builder:
+        class: Okvpn\Bundle\BetterOroBundle\Filters\DatagridDateGroupingBuilder
+        arguments:
+            - '%oro_report.calendar_date.entity.class%'
+            - ~
+            - '@service_container'
+
+    oro_tag.extension.tag_search_results:
+        class: Okvpn\Bundle\BetterOroBundle\Tag\TagSearchResultsExtension
+        arguments:
+            - '@oro_search.formatter.result_formatter'
+            - '@oro_search.mapper'
+            - '@event_dispatcher'
+        tags:
+            - { name: oro_datagrid.extension }
+
     oro_datagrid.twig.datagrid:
         class: Okvpn\Bundle\BetterOroBundle\Datagrid\DataGridExtension
         public: false

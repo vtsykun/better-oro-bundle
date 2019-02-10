@@ -40,3 +40,8 @@ services:
         class: Okvpn\Bundle\BetterOroBundle\Form\Extension\DateFieldChoiceExtension
         tags:
             - { name: form.type_extension, extended_type: 'Oro\Bundle\QueryDesignerBundle\Form\Type\DateFieldChoiceType' }
+
+    oro_asset_bundle.asset_config.cache:
+        class: Okvpn\Bundle\BetterOroBundle\Asset\AssetConfigCache
+        arguments:
+            - '@kernel'

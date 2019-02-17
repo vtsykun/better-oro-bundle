@@ -1,3 +1,2 @@
 bundles:
-    - Okvpn\Bundle\DatadogBundle\OkvpnDatadogBundle
     - { name: Okvpn\Bundle\BetterOroBundle\OkvpnBetterOroBundle, priority: 20 }

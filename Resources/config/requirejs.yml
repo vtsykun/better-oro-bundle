@@ -1,3 +1,4 @@
 config:
     paths:
         'oroui/js/error': 'bundles/okvpnbetteroro/js/error.js'
+        'orodatagrid/js/app/plugins/grid/fullscreen-plugin': 'bundles/okvpnbetteroro/js/fullscreen-plugin.js'

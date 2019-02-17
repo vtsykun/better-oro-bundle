@@ -8,6 +8,12 @@ services:
         tags:
             - { name: oro_message_queue.consumption.extension }
 
+    Oro\Bundle\CronBundle\Command\CronDefinitionsLoadCommand:
+        public: false
+        class: Okvpn\Bundle\BetterOroBundle\Command\CronDefinitionsLoadCommand
+        tags:
+            - { name: console.command }
+
     okvpn_action.run_cron_command:
         class: Okvpn\Bundle\BetterOroBundle\Cron\RunCronCommandAction
         arguments: ['@oro_cron.async.command_runner']

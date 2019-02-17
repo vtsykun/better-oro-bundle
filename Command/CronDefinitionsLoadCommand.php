@@ -2,6 +2,7 @@
 
 namespace Okvpn\Bundle\BetterOroBundle\Command;
 
+use Okvpn\Bundle\BetterOroBundle\Cron\CronLoadEvent;
 use Psr\Log\LogLevel;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -38,7 +39,12 @@ class CronDefinitionsLoadCommand extends BugCronDefinitionsLoadCommand
         $deferred = $this->getDeferredScheduler($output);
         $this->removeOrphanedCronCommands($deferred);
         $this->loadCronCommands($deferred);
+
+        $event = new CronLoadEvent($deferred);
+        $this->getContainer()->get('event_dispatcher')->dispatch(CronLoadEvent::NAME, $event);
+
         $deferred->flush();
+        $this->deferred = null;
 
         $output->writeln('<info>The cron command definitions were successfully loaded.</info>');
         return 0;

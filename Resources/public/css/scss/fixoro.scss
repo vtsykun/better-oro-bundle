@@ -124,3 +124,8 @@ body {
 img.widget-picker__img {
   max-width: 100%;
 }
+
+//Fix 2 scroll bar on entity view page
+.layout-content.scrollable-container {
+  height: 85px;
+}

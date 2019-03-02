@@ -2,3 +2,4 @@ config:
     paths:
         'oroui/js/error': 'bundles/okvpnbetteroro/js/error.js'
         'orodatagrid/js/app/plugins/grid/fullscreen-plugin': 'bundles/okvpnbetteroro/js/fullscreen-plugin.js'
+        'oro/filter/dictionary-filter': 'bundles/okvpnbetteroro/js/dictionary-filter.js'

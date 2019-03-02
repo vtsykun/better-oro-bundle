@@ -1,0 +1,5 @@
+oro/platform:
+    'src/Oro/Bundle/FilterBundle/Resources/public/js/filter/dictionary-filter.js': 62c629ee7a1109d99c2dc7121cd15aee2929a77f
+    'src/Oro/Bundle/DataGridBundle/Resources/public/js/app/plugins/grid/fullscreen-plugin.js': a4c9742574758f264d2c0c3966e217f785ec7dc3
+    'src/Oro/Bundle/UIBundle/Resources/public/js/error.js': 44dd1cbf3c0fe78bc23110c3bef8791abf7650c5
+    'src/Oro/Bundle/TagBundle/Grid/Extension/TagSearchResultsExtension.php': 9b380cbbf74a35bd71d450c8c9cc11ab6b40cd1c

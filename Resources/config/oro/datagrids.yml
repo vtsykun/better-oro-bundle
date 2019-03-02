@@ -1,4 +1,6 @@
 datagrids:
+    # Action bundle not works with query builder.
+    # Add RunCronCommandAction
     oro-cron-schedules-grid:
         source:
             query_builder: null
@@ -10,3 +12,12 @@ datagrids:
                     - s.definition
                 from:
                     - { table: OroCronBundle:Schedule , alias: s }
+        columns:
+            id:
+                label: ID
+        sorters:
+            columns:
+                id:
+                    data_name: s.id
+            default:
+                id: DESC

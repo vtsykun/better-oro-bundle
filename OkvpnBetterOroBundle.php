@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Okvpn\Bundle\BetterOroBundle;
 
+use Okvpn\Bundle\BetterOroBundle\DependencyInjection\CompilerPass\DataauditTokenPass;
 use Okvpn\Bundle\BetterOroBundle\DependencyInjection\CompilerPass\DisableContainerResetExtensionPass;
 use Okvpn\Bundle\BetterOroBundle\DependencyInjection\CompilerPass\MessageQueuePass;
 use Oro\Bundle\MessageQueueBundle\DependencyInjection\Compiler\BuildExtensionsPass;
@@ -14,6 +17,7 @@ class OkvpnBetterOroBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new MessageQueuePass());
+        $container->addCompilerPass(new DataauditTokenPass());
 
         /**
          * Disable container_reset_extension, see

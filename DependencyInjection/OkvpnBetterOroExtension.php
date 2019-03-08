@@ -2,6 +2,7 @@
 
 namespace Okvpn\Bundle\BetterOroBundle\DependencyInjection;
 
+use Okvpn\Bundle\BetterOroBundle\Command\DataauditGCCommand;
 use Okvpn\Bundle\BetterOroBundle\DependencyInjection\CompilerPass\MessageQueuePass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -43,6 +44,16 @@ class OkvpnBetterOroExtension extends Extension
             }
             $channels[] = MessageQueuePass::CHANEL;
             $container->setParameter('monolog.additional_channels', $channels);
+        }
+
+        $dataaudit = $config['dataaudit'];
+        $container->getDefinition(DataauditGCCommand::class)
+            ->replaceArgument(0, $dataaudit['dataaudit_gc'] ?? []);
+        if (!isset($dataaudit['default_organization'])) {
+            $container->removeDefinition('okvpn.dataaudit.token_storage');
+        } else {
+            $container->getDefinition('okvpn.dataaudit.token_storage')
+                ->replaceArgument(1, (int) $dataaudit['default_organization']);
         }
 
         if (true === $capabilities['mq_disable_container_reset']) {

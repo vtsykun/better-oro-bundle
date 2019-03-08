@@ -46,6 +46,20 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('disable_remote_transactions')->defaultValue(true)->end()
                     ->end()
                 ->end()
+                ->arrayNode('dataaudit')
+                    ->children()
+                        ->arrayNode('dataaudit_gc')
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('entity_class')->isRequired()->cannotBeEmpty()->end()
+                                    ->enumNode('action')->values(['update', 'create', 'remove'])->isRequired()->end()
+                                    ->integerNode('keep_time')->isRequired()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->integerNode('default_organization')->end()
+                    ->end()
+                ->end()
             ->end();
         return $treeBuilder;
     }

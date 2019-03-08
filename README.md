@@ -18,6 +18,7 @@ Table of Contents
  - [Fix order by timePeriod in DateGroupingFilter](#fix-order-by-the-time-period)
  - [Manual cron run](#cron-run-in-ui)
  - [Show datagrid exception if debug = true](./Datagrid/DataGridExtension.php#L27)
+ - [Dataaudit improvement](#dataaudit-improvement)
 
 ## Configurable capabilities
 
@@ -198,6 +199,61 @@ that are not based on the commands.
 
 Reset of container after processing a message have a great impact on perforate and memory leak. 
 This functionality is disabled by this bundle.
+
+### Dataaudit improvement
+
+1) Removed not used indexes. The index size is 3x times more than the table size. At the same time, 
+many indexes are not used and overlap each over. To remove not used index you can use query.
+
+|  oid  |          table_name           | row_estimate | total_bytes | index_bytes | toast_bytes | table_bytes | total  |  index  |   toast    |   table    |
+|-------|-------------------------------|--------------|-------------|-------------|-------------|-------------|--------|---------|------------|------------|
+|  1255 | pg_proc                       |         2894 |      999424 |      352256 |        8192 |      638976 | 976 kB | 344 kB  | 8192 bytes | 624 kB     |
+| 16712 | oro_audit                     |       930151 |   968015872 |   710787072 |        8192 |   257220608 | 923 MB | 678 MB  | 8192 bytes | 245 MB     |
+
+
+```php
+<?php
+
+namespace App\Bundle\AppBundle\Migrations\Schema\v1_0;
+
+use Doctrine\DBAL\Schema\Schema;
+use Okvpn\Bundle\BetterOroBundle\Migration\OptimiseDataauditIndexQuery;
+use Oro\Bundle\MigrationBundle\Migration\Migration;
+use Oro\Bundle\MigrationBundle\Migration\QueryBag;
+
+class AppBundleMigration implements Migration
+{
+    /**
+     * @inheritDoc
+     */
+    public function up(Schema $schema, QueryBag $queries)
+    {
+        $queries->addPostQuery(new OptimiseDataauditIndexQuery());
+    }
+}
+```
+
+2) To remove old audit record you can use garbage collection cron command `oro:cron:dataaudit-garbage-collector`
+To enable the cron command needs add to your configuration `Resources/oro/app.yml` or `config/config.yml`
+Where: `keep_time` time in sec. action: `update`, `create`, `remove`.
+
+```
+okvpn_better_oro:
+    dataaudit:
+        dataaudit_gc:
+            - { action: update, keep_time: 259200, entity_class: 'Okvpn\Bundle\AppBundle\Entity\Item' }
+
+```
+
+3) Set default organization if not token in security context. When command runs from CLI and modify entity, 
+its changes will not display in grid. You can set default organization for this case.
+To set default organization ID needs update configuration `Resources/oro/app.yml` or `config/config.yml`
+
+```
+okvpn_better_oro:
+    dataaudit:
+        default_organization: 1
+```
 
 ### Disable orocrm request form
 

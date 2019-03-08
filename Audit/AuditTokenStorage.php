@@ -12,7 +12,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class AuditTokenStorage implements TokenStorageInterface
 {
-    const TTT = 2;
     private $tokenStorage;
     private $organization;
 
